@@ -7,7 +7,6 @@ import {
 import { ArrowRight } from 'lucide-react'
 import { getCASolarGeneration, getCACO2Trend, getEnergyMix } from '../utils/eiaApi'
 import { co2Equivalents, fmt$, fmtCO2, paybackLabel } from '../utils/calculations'
-import { generateNarration } from '../utils/claudeApi'
 import { getApprovalTime } from '../utils/approvalTime'
 import { DECISIONS } from '../data/decisions'
 import ScoreHUD from './ScoreHUD'
@@ -45,8 +44,6 @@ function useCountUp(target, duration = 1200, delay = 300) {
 export default function OutcomeScreen({ lastOutcome, persona, state, onContinue, round, total }) {
   const { decisionId, optionId, outcome } = lastOutcome
   const [chartData, setChartData] = useState(null)
-  const [narration, setNarration] = useState(null)
-  const [loadingNarration, setLoadingNarration] = useState(false)
 
   const decision = DECISIONS.find((d) => d.id === decisionId)
   const option = decision?.options.find((o) => o.id === optionId)
@@ -68,14 +65,6 @@ export default function OutcomeScreen({ lastOutcome, persona, state, onContinue,
     }
     loadChart()
   }, [chartType])
-
-  useEffect(() => {
-    if (!decision || !option) return
-    setLoadingNarration(true)
-    generateNarration(persona, decision, option, outcome)
-      .then(setNarration)
-      .finally(() => setLoadingNarration(false))
-  }, [decisionId, optionId])
 
   return (
     <div className="relative min-h-screen flex flex-col bg-gradient-to-br from-green-50 via-white to-blue-50 overflow-hidden">
@@ -224,28 +213,6 @@ export default function OutcomeScreen({ lastOutcome, persona, state, onContinue,
               />
             )}
 
-            {/* AI narration */}
-            <AnimatePresence>
-              {(narration || loadingNarration) && (
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="bg-blue-50 border border-blue-200 rounded-3xl p-5 mb-4"
-                >
-                  <p className="text-xs font-bold text-blue-500 uppercase tracking-wider mb-2">
-                    🤖 AI Analysis
-                  </p>
-                  {loadingNarration ? (
-                    <div className="space-y-2 animate-pulse">
-                      <div className="h-3 bg-blue-200 rounded w-full" />
-                      <div className="h-3 bg-blue-200 rounded w-4/5" />
-                    </div>
-                  ) : (
-                    <p className="text-slate-700 text-sm leading-relaxed">{narration}</p>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
 
             {/* Real-world insight */}
             <motion.div

@@ -4,7 +4,6 @@ import { ChevronRight } from 'lucide-react'
 import { DECISIONS } from '../data/decisions'
 import { co2Equivalents, fmt$, fmtCO2, paybackLabel } from '../utils/calculations'
 import { useCountUp } from '../hooks/useCountUp'
-import { generateNarration } from '../utils/claudeApi'
 import { getApprovalTime } from '../utils/approvalTime'
 
 const OPTION_STYLES = [
@@ -110,8 +109,6 @@ function DecisionView({ decision, persona, onDecide }) {
 // ── Outcome view ────────────────────────────────────────────
 function OutcomeView({ lastOutcome, persona, state, onContinue, round, total }) {
   const { decisionId, optionId, outcome } = lastOutcome
-  const [narration, setNarration] = useState(null)
-  const [loadingNarration, setLoadingNarration] = useState(false)
 
   const decision = DECISIONS.find(d => d.id === decisionId)
   const option = decision?.options.find(o => o.id === optionId)
@@ -128,10 +125,6 @@ function OutcomeView({ lastOutcome, persona, state, onContinue, round, total }) 
 
   useEffect(() => {
     if (!decision || !option) return
-    setLoadingNarration(true)
-    generateNarration(persona, decision, option, outcome)
-      .then(setNarration)
-      .finally(() => setLoadingNarration(false))
   }, [decisionId, optionId])
 
   return (
@@ -274,25 +267,6 @@ function OutcomeView({ lastOutcome, persona, state, onContinue, round, total }) 
           )
         })()}
 
-        {/* AI narration */}
-        {(narration || loadingNarration) && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="bg-blue-50 border border-blue-200 rounded-2xl p-3"
-          >
-            <p className="text-xs font-bold text-blue-500 mb-1">🤖 AI Analysis</p>
-            {loadingNarration ? (
-              <div className="space-y-1.5 animate-pulse">
-                <div className="h-2.5 bg-blue-200 rounded w-full" />
-                <div className="h-2.5 bg-blue-200 rounded w-4/5" />
-              </div>
-            ) : (
-              <p className="text-xs text-slate-700 leading-relaxed">{narration}</p>
-            )}
-          </motion.div>
-        )}
 
 
         {/* Data insight */}
