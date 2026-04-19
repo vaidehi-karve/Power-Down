@@ -10,7 +10,8 @@
 **[Live Demo →](https://power-down.vercel.app)**
 
 Built by **Team Meghabyte** for **DataHacks 2026** at UC San Diego
-Tracks: Data Analytics + Product & Entrepreneurship | Theme: Environmental, Climate Science & Sustainability
+
+- Tracks: Data Analytics + Product & Entrepreneurship | Theme: Environmental, Climate Science & Sustainability
 
 ---
 
