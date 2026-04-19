@@ -12,7 +12,7 @@ export function co2Equivalents(tonsPerYear) {
   return {
     trees: Math.round(tonsPerYear * 45),           // EPA: 1 tree absorbs ~48 lbs CO2/yr
     carMilesDriven: Math.round(tonsPerYear * 2475), // EPA: 404g CO2/mile avg car
-    flightsNYLA: Math.round(tonsPerYear / 0.62),   // EPA: ~0.62 tons CO2 per roundtrip NY-LA flight
+    flightMiles: Math.round((tonsPerYear * 2000) / 0.217), // EPA: 0.217 lbs CO2 per passenger mile flown
     gasGallons: Math.round(tonsPerYear * 2000 / GAS_CO2_LBS_PER_GALLON),
   }
 }

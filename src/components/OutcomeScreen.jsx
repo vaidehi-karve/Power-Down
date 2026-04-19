@@ -198,7 +198,12 @@ export default function OutcomeScreen({ lastOutcome, persona, state, onContinue,
                 </p>
                 <div className="flex flex-wrap justify-center gap-3">
                   <EquivChip emoji="🌳" value={`${equiv.trees} trees`} label="planted" />
-                  <EquivChip emoji="✈️" value={`${equiv.flightsNYLA} flights`} label="NY→LA avoided" />
+                  <EquivChip
+                    emoji="✈️"
+                    value={equiv.flightMiles.toLocaleString()}
+                    label="flight miles"
+                    sublabel="equivalent in aviation emissions"
+                  />
                   <EquivChip emoji="⛽" value={`${equiv.gasGallons} gal`} label="gas not burned" />
                 </div>
               </motion.div>
@@ -341,12 +346,13 @@ function FuelStat({ label, value, positive }) {
   )
 }
 
-function EquivChip({ emoji, value, label }) {
+function EquivChip({ emoji, value, label, sublabel }) {
   return (
     <div className="flex flex-col items-center bg-emerald-50 border border-emerald-200 rounded-2xl px-4 py-2 min-w-[90px]">
       <span className="text-2xl mb-0.5">{emoji}</span>
       <p className="text-sm font-black text-emerald-700">{value}</p>
       <p className="text-xs text-emerald-600">{label}</p>
+      {sublabel && <p className="text-xs text-emerald-500 text-center leading-tight mt-0.5">{sublabel}</p>}
     </div>
   )
 }

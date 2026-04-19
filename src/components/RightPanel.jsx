@@ -209,7 +209,12 @@ function OutcomeView({ lastOutcome, persona, state, onContinue, round, total }) 
             <p className="text-xs font-bold text-emerald-600 mb-2">That CO₂ saving equals…</p>
             <div className="flex gap-2 flex-wrap">
               <EquivChip emoji="🌳" value={`${equiv.trees}`} label="trees" />
-              <EquivChip emoji="✈️" value={`${equiv.flightsNYLA}`} label="flights" />
+              <EquivChip
+                emoji="✈️"
+                value={equiv.flightMiles.toLocaleString()}
+                label="flight miles"
+                sublabel="equivalent in aviation emissions"
+              />
               <EquivChip emoji="⛽" value={`${equiv.gasGallons}`} label="gallons" />
             </div>
           </motion.div>
@@ -301,13 +306,16 @@ function OutcomeView({ lastOutcome, persona, state, onContinue, round, total }) 
   )
 }
 
-function EquivChip({ emoji, value, label }) {
+function EquivChip({ emoji, value, label, sublabel }) {
   return (
     <div className="flex items-center gap-1 bg-white border border-emerald-200 rounded-xl px-2 py-1">
       <span className="text-base">{emoji}</span>
       <div>
-        <p className="text-xs font-black text-emerald-700 leading-none">{value}</p>
-        <p className="text-xs text-emerald-600 leading-none">{label}</p>
+        <div className="flex items-center leading-none">
+          <p className="text-xs font-black text-emerald-700 leading-none">{value}</p>
+          <span className="text-xs text-emerald-600 ml-1 leading-none">{label}</span>
+        </div>
+        {sublabel && <p className="text-xs text-emerald-500 leading-none mt-0.5">{sublabel}</p>}
       </div>
     </div>
   )

@@ -62,6 +62,25 @@ Example — Rooftop Solar (7 kW system):
         10,500 × ${co2Factor.toFixed(3)} ÷ 2,000 = ${((10500 * co2Factor) / 2000).toFixed(2)} tons/yr`,
       source:
         `Source: EIA Electric Power Annual 2023 — state-level CO₂ emissions factors for electricity generation. ${stateLabel} figure: ${co2Factor.toFixed(3)} lbs CO₂/kWh.`,
+      flightSubsection: {
+        formula: `Flight Miles = (CO₂ Tons × 2,000) ÷ 0.217
+
+Where:
+  × 2,000  converts tons → pounds of CO₂
+  ÷ 0.217  pounds of CO₂ per passenger mile flown
+
+Example: 6.3 tons CO₂ avoided
+  = (6.3 × 2,000) ÷ 0.217
+  = 12,600 ÷ 0.217
+  = 58,065 flight miles
+
+For context:
+  New York → Los Angeles:  ~2,450 miles
+  New York → London:       ~3,450 miles
+  Los Angeles → Tokyo:     ~5,450 miles`,
+        body: 'We use flight miles instead of number of flights because flight distance is a consistent unit — a 1-hour flight and a 14-hour flight produce very different emissions, so counting flights as equal units would be misleading.',
+        source: 'Source: EPA Greenhouse Gas Equivalencies Calculator 2024 — Aviation emission factor 0.217 lbs CO₂ per passenger mile, including non-CO₂ warming effects at altitude.',
+      },
     },
     {
       color: '#F59E0B',
@@ -170,6 +189,26 @@ function FormulaCard({ card }) {
           {card.formula}
         </pre>
         <p className="text-xs text-slate-400 mt-3 leading-relaxed">{card.source}</p>
+
+        {card.flightSubsection && (
+          <>
+            <div className="border-t border-slate-200 mt-5 mb-4" />
+            <h4 className="text-sm font-black text-slate-700 mb-3">✈️ Flight Miles Equivalent</h4>
+            <pre
+              className="text-xs leading-relaxed rounded-xl overflow-x-auto whitespace-pre-wrap"
+              style={{
+                fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+                background: '#F3F4F6',
+                padding: '12px 16px',
+                color: '#1F2937',
+              }}
+            >
+              {card.flightSubsection.formula}
+            </pre>
+            <p className="text-sm text-slate-600 leading-relaxed mt-3">{card.flightSubsection.body}</p>
+            <p className="text-xs text-slate-400 mt-2 leading-relaxed italic">{card.flightSubsection.source}</p>
+          </>
+        )}
       </div>
     </div>
   )

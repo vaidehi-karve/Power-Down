@@ -75,7 +75,7 @@ export default function FinalScreen({ state, onRestart }) {
         { label: 'CO₂ avoided/yr', value: fmtCO2(totalCO2Avoided), pos: totalCO2Avoided > 0 },
         { label: '5-year savings', value: fmt$(totalBillSavings), pos: totalBillSavings > 0 },
         { label: '🌳 Trees equivalent', value: `${equiv.trees}`, pos: true },
-        { label: '✈️ Flights avoided', value: `${equiv.flightsNYLA}`, pos: true },
+        { label: '✈️ Flight miles equiv.', value: equiv.flightMiles.toLocaleString(), pos: true },
       ],
     },
     {
