@@ -10,6 +10,7 @@ export default function LeftPanel({ state, round, total }) {
   const [showMethodology, setShowMethodology] = useState(false)
   const { totalBillSavings, totalCO2Avoided, totalUpfrontCost, currentMonthlyBill, persona } = state
   const score = calcScore(totalCO2Avoided, totalBillSavings)
+  const approval = getApprovalTime(state.stateCode)
 
   const scoreDisplay = useCountUp(score)
   const billDisplay = useCountUp(Math.abs(currentMonthlyBill))
@@ -115,6 +116,15 @@ export default function LeftPanel({ state, round, total }) {
           sub="total so far"
           valueClass="text-rose-400"
           estimated={state.isFallback}
+        />
+
+        <StatBlock
+          emoji="📋"
+          label="Solar Permit Time"
+          tooltip="Average number of days to get a solar installation permit approved in your state. Faster permitting = sooner savings. Source: ZenPower Dataset."
+          value={`${approval.days.toFixed(1)} days`}
+          sub={approval.isStateSpecific ? 'state average' : 'national average'}
+          valueClass="text-blue-600"
         />
       </div>
 
