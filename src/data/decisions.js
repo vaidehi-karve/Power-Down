@@ -24,7 +24,7 @@ export const DECISIONS = [
       {
         id: 'assistance',
         label: 'Call about low-income assistance programs',
-        description: 'Check if you qualify for CARE or FERA discounts.',
+        description: 'Check if you qualify for low-income utility assistance programs (LIHEAP and state programs).',
       },
     ],
   },
@@ -38,7 +38,7 @@ export const DECISIONS = [
       const taxCredit = Math.round(systemCost * 0.3)
       const caRebate = 1000
       const netCost = systemCost - taxCredit - caRebate
-      return `A solar installer gives you a quote: $${systemCost.toLocaleString()} installed (before incentives). Federal tax credit: 30% = $${taxCredit.toLocaleString()} back. California rebate: $1,000. Your net cost: $${netCost.toLocaleString()}. Your roof needs replacing in 3 years.`
+      return `A solar installer gives you a quote: $${systemCost.toLocaleString()} installed (before incentives). Federal tax credit: 30% = $${taxCredit.toLocaleString()} back. State/local rebate: $1,000. Your net cost: $${netCost.toLocaleString()}. Your roof needs replacing in 3 years.`
     },
     options: [
       {
@@ -97,12 +97,12 @@ export const DECISIONS = [
     id: 'car',
     title: 'Your Next Car',
     round: 3,
-    intro: () => `Your car is dying and you need a replacement. Here are your real options based on EIA fuel cost data for California:`,
+    intro: () => `Your car is dying and you need a replacement. Here are your real options based on EIA fuel cost data for your state:`,
     options: [
       {
         id: 'used_gas',
         label: 'Used gas car — $12,000',
-        description: 'Familiar, lower upfront. ~$2,100/year in fuel at current CA prices.',
+        description: 'Familiar, lower upfront. Fuel cost varies by your local gas prices.',
       },
       {
         id: 'used_ev',
