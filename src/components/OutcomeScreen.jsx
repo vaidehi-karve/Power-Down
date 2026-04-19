@@ -8,6 +8,7 @@ import { ArrowRight } from 'lucide-react'
 import { getCASolarGeneration, getCACO2Trend, getEnergyMix } from '../utils/eiaApi'
 import { co2Equivalents, fmt$, fmtCO2, paybackLabel } from '../utils/calculations'
 import { generateNarration } from '../utils/claudeApi'
+import { getApprovalTime } from '../utils/approvalTime'
 import { DECISIONS } from '../data/decisions'
 import ScoreHUD from './ScoreHUD'
 import { calcScore } from './ScoreHUD'
@@ -214,6 +215,15 @@ export default function OutcomeScreen({ lastOutcome, persona, state, onContinue,
               </motion.div>
             )}
 
+            {/* Permit approval time — Decision 2 (solar) only */}
+            {decisionId === 'solar' && (
+              <PermitTimeCard
+                stateCode={state.stateCode}
+                stateName={state.stateName}
+                choseSolar={optionId === 'install_now' || optionId === 'install_later'}
+              />
+            )}
+
             {/* AI narration */}
             <AnimatePresence>
               {(narration || loadingNarration) && (
@@ -295,6 +305,61 @@ export default function OutcomeScreen({ lastOutcome, persona, state, onContinue,
         </div>
       </div>
     </div>
+  )
+}
+
+function PermitTimeCard({ stateCode, stateName, choseSolar }) {
+  const approval = getApprovalTime(stateCode)
+  const locationLabel = approval.isStateSpecific
+    ? (stateName || stateCode || 'your state')
+    : 'your region'
+
+  const bodyText = choseSolar
+    ? `Your permit is estimated to take ${approval.days.toFixed(1)} days to approve based on ${approval.isStateSpecific ? (stateName || stateCode) + ' state' : 'national'} data. We've reflected this wait in your building animation.`
+    : `If you had chosen solar, your permit would typically take ${approval.days.toFixed(1)} days to approve in your area. This wait time is one reason people delay going solar.`
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.62 }}
+      style={{
+        background: '#EFF6FF',
+        border: '1.5px solid #BFDBFE',
+        borderRadius: 12,
+        padding: 16,
+        marginBottom: 16,
+      }}
+    >
+      <p style={{ fontSize: '0.7rem', fontWeight: 700, color: '#3B82F6', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>
+        ⏱️ Permit Approval Time
+      </p>
+      <p style={{ fontSize: '2rem', fontWeight: 900, color: '#1D4ED8', lineHeight: 1, marginBottom: 2 }}>
+        {approval.days.toFixed(1)} days
+      </p>
+      <p style={{ fontSize: '0.75rem', color: '#6B7280', marginBottom: 10 }}>
+        average in {locationLabel}
+      </p>
+      <p style={{ fontSize: '0.85rem', color: '#374151', lineHeight: 1.5, marginBottom: 10 }}>
+        {bodyText}
+      </p>
+      <span
+        style={{
+          display: 'inline-block',
+          fontSize: '0.7rem',
+          fontWeight: 700,
+          padding: '2px 8px',
+          borderRadius: 9999,
+          background: approval.isStateSpecific ? '#DCFCE7' : '#FEF9C3',
+          color: approval.isStateSpecific ? '#166534' : '#854D0E',
+        }}
+      >
+        {approval.isStateSpecific ? `📍 ${stateCode} state data` : '🗺️ National average used'}
+      </span>
+      <p style={{ fontSize: '0.7rem', color: '#9CA3AF', fontStyle: 'italic', marginTop: 8 }}>
+        Source: ZenPower Dataset
+      </p>
+    </motion.div>
   )
 }
 

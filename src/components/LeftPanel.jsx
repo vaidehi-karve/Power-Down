@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useCountUp } from '../hooks/useCountUp'
 import { calcScore } from '../utils/calculations'
+import { getApprovalTime } from '../utils/approvalTime'
 import InfoTooltip from './InfoTooltip'
 import MethodologyPage from './MethodologyPage'
 
