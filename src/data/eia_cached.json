@@ -1,0 +1,89 @@
+{
+  "lastUpdated": "2024-11-01",
+  "source": "EIA API v2 — pre-fetched fallback",
+  "electricityPrices": {
+    "CA": {
+      "residential": 0.29,
+      "commercial": 0.21,
+      "industrial": 0.12,
+      "unit": "$/kWh",
+      "year": 2024,
+      "source": "EIA Electricity Retail Sales"
+    },
+    "national_avg": {
+      "residential": 0.163,
+      "commercial": 0.121,
+      "unit": "$/kWh",
+      "year": 2024
+    }
+  },
+  "solarGeneration": {
+    "CA": {
+      "total_gwh": 47832,
+      "year": 2023,
+      "pct_of_total": 18.7,
+      "growth_pct_yoy": 34,
+      "source": "EIA Electric Power Operational Data",
+      "trend": [
+        { "year": 2015, "gwh": 8210 },
+        { "year": 2016, "gwh": 11400 },
+        { "year": 2017, "gwh": 15200 },
+        { "year": 2018, "gwh": 18900 },
+        { "year": 2019, "gwh": 23100 },
+        { "year": 2020, "gwh": 27800 },
+        { "year": 2021, "gwh": 32400 },
+        { "year": 2022, "gwh": 35700 },
+        { "year": 2023, "gwh": 47832 }
+      ]
+    }
+  },
+  "co2Emissions": {
+    "CA": {
+      "lbs_per_kwh": 0.512,
+      "total_mmt": 39.4,
+      "year": 2023,
+      "source": "EIA CO2 Emissions Aggregates / eGRID",
+      "trend": [
+        { "year": 2015, "mmt": 62.1 },
+        { "year": 2016, "mmt": 58.7 },
+        { "year": 2017, "mmt": 55.3 },
+        { "year": 2018, "mmt": 52.8 },
+        { "year": 2019, "mmt": 49.2 },
+        { "year": 2020, "mmt": 44.6 },
+        { "year": 2021, "mmt": 43.1 },
+        { "year": 2022, "mmt": 41.3 },
+        { "year": 2023, "mmt": 39.4 }
+      ]
+    }
+  },
+  "energyMix": {
+    "CA": {
+      "year": 2023,
+      "source": "EIA Electric Power Operational Data",
+      "mix": [
+        { "fuel": "Solar", "pct": 18.7, "color": "#F59E0B" },
+        { "fuel": "Wind", "pct": 10.2, "color": "#60A5FA" },
+        { "fuel": "Hydro", "pct": 12.1, "color": "#34D399" },
+        { "fuel": "Nuclear", "pct": 8.9, "color": "#A78BFA" },
+        { "fuel": "Geothermal", "pct": 4.8, "color": "#F97316" },
+        { "fuel": "Natural Gas", "pct": 38.2, "color": "#6B7280" },
+        { "fuel": "Other", "pct": 7.1, "color": "#9CA3AF" }
+      ]
+    }
+  },
+  "gasPrice": {
+    "CA": {
+      "price": 4.82,
+      "unit": "$/gallon",
+      "year": 2024,
+      "source": "EIA Weekly Petroleum Report"
+    }
+  },
+  "adoptionStats": {
+    "CA_solar_homeowners_pct": 14.2,
+    "CA_ev_registrations_2023": 1200000,
+    "CA_ev_pct_new_sales": 25.4,
+    "CA_community_solar_subscribers": 42000,
+    "source": "CPUC / CARB / SEIA 2024"
+  }
+}
